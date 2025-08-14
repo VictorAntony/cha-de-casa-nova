@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Presentes - Casamento Victor & [Nome]</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff8f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background: #d97757;
+            color: white;
+            padding: 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        header p {
+            margin: 5px 0 0;
+        }
+        main {
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .gift {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
+        }
+        .gift button {
+            background: #d97757;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .gift button:disabled {
+            background: gray;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lista de Presentes</h1>
+        <p>Victor & [Nome da Noiva]</p>
+    </header>
+
+    <main>
+        <h2>Escolha um presente para nos ajudar a celebrar</h2>
+
+        <div class="gift">
+            <span>Jogo de pratos</span>
+            <button onclick="comprar(this)">Marcar como comprado</button>
+        </div>
+        <div class="gift">
+            <span>Panela elétrica</span>
+            <button onclick="comprar(this)">Marcar como comprado</button>
+        </div>
+        <div class="gift">
+            <span>Jogo de taças</span>
+            <button onclick="comprar(this)">Marcar como comprado</button>
+        </div>
+    </main>
+
+    <script>
+        function comprar(botao) {
+            botao.textContent = "Já comprado";
+            botao.disabled = true;
+        }
+    </script>
+</body>
+</html>
