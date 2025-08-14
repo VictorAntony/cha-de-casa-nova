@@ -19,7 +19,6 @@
         header {
             background: rgba(106, 13, 173, 0.8);
             padding: 30px 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         header h1 {
             margin: 0;
@@ -76,9 +75,6 @@
             font-weight: bold;
             transition: all 0.3s ease;
         }
-        .gift button:hover {
-            background: #fff5c3;
-        }
         .gift button:disabled {
             background: #bfae80;
             color: white;
@@ -98,54 +94,70 @@
 
         <div class="gift" data-id="presente1">
             <span>Lanterna de papel (tema Enrolados)</span>
-            <button onclick="comprar(this)">Marcar como comprado</button>
+            <button>Marcar como comprado</button>
         </div>
         <div class="gift" data-id="presente2">
             <span>Jogo de pratos</span>
-            <button onclick="comprar(this)">Marcar como comprado</button>
+            <button>Marcar como comprado</button>
         </div>
         <div class="gift" data-id="presente3">
             <span>Panela elétrica</span>
-            <button onclick="comprar(this)">Marcar como comprado</button>
+            <button>Marcar como comprado</button>
         </div>
         <div class="gift" data-id="presente4">
             <span>Jogo de taças</span>
-            <button onclick="comprar(this)">Marcar como comprado</button>
+            <button>Marcar como comprado</button>
         </div>
     </main>
 
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
     <script>
-        // Carregar presentes já comprados do localStorage
-        document.addEventListener("DOMContentLoaded", () => {
-            const comprados = JSON.parse(localStorage.getItem("presentesComprados")) || {};
-            document.querySelectorAll(".gift").forEach(gift => {
-                const id = gift.dataset.id;
-                if (comprados[id]) {
-                    const botao = gift.querySelector("button");
-                    botao.textContent = `Já comprado por ${comprados[id]}`;
+        // Cole aqui as configurações do Firebase que você copiou
+        const firebaseConfig = {
+          apiKey: "AIzaSyDdxE4EsmszqjM-BcpDIovM8OdPCc15ShU",
+          authDomain: "lista-casamento-victor.firebaseapp.com",
+          databaseURL: "https://lista-casamento-victor-default-rtdb.firebaseio.com",
+          projectId: "lista-casamento-victor",
+          storageBucket: "lista-casamento-victor.firebasestorage.app",
+          messagingSenderId: "985634071927",
+          appId: "1:985634071927:web:ea3a487e8f5302508cad72"
+        };
+        
+        // Inicializar Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        const nomeInput = document.getElementById("nomeConvidado");
+
+        // Atualizar lista em tempo real
+        document.querySelectorAll(".gift").forEach(gift => {
+            const id = gift.dataset.id;
+            const botao = gift.querySelector("button");
+
+            // Ouvir alterações no Firebase
+            firebase.database().ref("presentes/" + id).on("value", snapshot => {
+                const valor = snapshot.val();
+                if (valor) {
+                    botao.textContent = `Já comprado por ${valor}`;
                     botao.disabled = true;
+                } else {
+                    botao.textContent = "Marcar como comprado";
+                    botao.disabled = false;
                 }
             });
+
+            // Ao clicar no botão
+            botao.addEventListener("click", () => {
+                const nome = nomeInput.value.trim();
+                if (!nome) {
+                    alert("Digite seu nome antes de escolher um presente.");
+                    return;
+                }
+                firebase.database().ref("presentes/" + id).set(nome);
+            });
         });
-
-        function comprar(botao) {
-            const nome = document.getElementById("nomeConvidado").value.trim();
-            if (!nome) {
-                alert("Por favor, digite seu nome antes de escolher um presente.");
-                return;
-            }
-
-            const gift = botao.closest(".gift");
-            const id = gift.dataset.id;
-
-            // Salvar no localStorage
-            const comprados = JSON.parse(localStorage.getItem("presentesComprados")) || {};
-            comprados[id] = nome;
-            localStorage.setItem("presentesComprados", JSON.stringify(comprados));
-
-            botao.textContent = `Já comprado por ${nome}`;
-            botao.disabled = true;
-        }
     </script>
 </body>
 </html>
