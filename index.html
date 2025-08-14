@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Presentes - Casamento Victor & Myrian</title>
+    <title>Lista de Presentes - Casamento Victor & [Nome]</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 
@@ -22,94 +22,3 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         header h1 {
-            margin: 0;
-            font-size: 42px;
-            color: #f9e79f;
-            text-shadow: 2px 2px #5b0f9a;
-        }
-        header p {
-            margin: 5px 0 0;
-            font-size: 22px;
-            color: #ffe4f7;
-        }
-        main {
-            padding: 20px;
-            max-width: 600px;
-            margin: auto;
-        }
-        h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #ffe4f7;
-            text-shadow: 1px 1px #5b0f9a;
-        }
-        .gift {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 2px solid #f9e79f;
-            backdrop-filter: blur(5px);
-        }
-        .gift span {
-            font-size: 20px;
-            color: #fff8f0;
-        }
-        .gift button {
-            background: #f9e79f;
-            color: #5b0f9a;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .gift button:hover {
-            background: #fff5c3;
-        }
-        .gift button:disabled {
-            background: #bfae80;
-            color: white;
-            cursor: not-allowed;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Lista de Presentes</h1>
-        <p>Victor & Myrian</p>
-    </header>
-
-    <main>
-        <h2>🌟 Escolha um presente para nos ajudar a celebrar 🌟</h2>
-
-        <div class="gift">
-            <span>Lanterna de papel (tema Enrolados)</span>
-            <button onclick="comprar(this)">Marcar como comprado</button>
-        </div>
-        <div class="gift">
-            <span>Jogo de pratos</span>
-            <button onclick="comprar(this)">Marcar como comprado</button>
-        </div>
-        <div class="gift">
-            <span>Panela elétrica</span>
-            <button onclick="comprar(this)">Marcar como comprado</button>
-        </div>
-        <div class="gift">
-            <span>Jogo de taças</span>
-            <button onclick="comprar(this)">Marcar como comprado</button>
-        </div>
-    </main>
-
-    <script>
-        function comprar(botao) {
-            botao.textContent = "Já comprado";
-            botao.disabled = true;
-        }
-    </script>
-</body>
-</html>
