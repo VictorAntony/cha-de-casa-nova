@@ -23,16 +23,29 @@
     }
     .gift {
       display: flex;
-      justify-content: space-between;
-      padding: 10px;
-      margin: 10px auto;
-      width: 450px;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+      margin: 15px auto;
+      width: 250px;
       background: #fff;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1px solid #ccc;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .gift img {
+      max-width: 200px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .gift a {
+      text-decoration: none;
+      color: #7b3fa0;
+      font-size: 14px;
+      margin-bottom: 8px;
     }
     button {
-      padding: 6px 10px;
+      padding: 8px 12px;
       background: #7b3fa0;
       color: white;
       border: none;
@@ -47,6 +60,12 @@
       color: white;
       cursor: not-allowed;
     }
+    #lista {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
   </style>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
@@ -54,17 +73,26 @@
 <body>
   <h1>Lista de Presentes</h1>
   <input type="text" id="nome" placeholder="Digite seu nome"/>
+
   <div id="lista">
-    <div class="gift">
+    <div class="gift" data-id="lanterna">
+      <img src="https://via.placeholder.com/200x150?text=Lanterna" alt="Lanterna">
       <span>Lanterna</span>
+      <a href="https://exemplo.com/lanterna" target="_blank">Ver na loja</a>
       <button onclick="comprar('lanterna')">Comprar</button>
     </div>
-    <div class="gift">
+
+    <div class="gift" data-id="pratos">
+      <img src="https://via.placeholder.com/200x150?text=Pratos" alt="Pratos">
       <span>Pratos</span>
+      <a href="https://exemplo.com/pratos" target="_blank">Ver na loja</a>
       <button onclick="comprar('pratos')">Comprar</button>
     </div>
-    <div class="gift">
-      <span>Panela</span>
+
+    <div class="gift" data-id="panela">
+      <img src="https://via.placeholder.com/200x150?text=Panela+El%C3%A9trica" alt="Panela elétrica">
+      <span>Panela elétrica</span>
+      <a href="https://exemplo.com/panela" target="_blank">Ver na loja</a>
       <button onclick="comprar('panela')">Comprar</button>
     </div>
   </div>
@@ -100,14 +128,14 @@
       });
     }
 
-    // 🔹 Atualização em tempo real dos presentes
+    // 🔹 Atualização em tempo real
     db.ref('presentes').on('value', snapshot => {
       const presentes = snapshot.val() || {};
       document.querySelectorAll('.gift').forEach(div => {
-        const item = div.querySelector('span').textContent.toLowerCase().replace(/\s+/g, '');
+        const itemId = div.getAttribute('data-id');
         const botao = div.querySelector('button');
-        if (presentes[item]) {
-          botao.textContent = "Já comprado por " + presentes[item].compradoPor;
+        if (presentes[itemId]) {
+          botao.textContent = "Já comprado por " + presentes[itemId].compradoPor;
           botao.disabled = true;
         } else {
           botao.textContent = "Comprar";
@@ -118,8 +146,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
