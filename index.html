@@ -1,163 +1,120 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Presentes - Casamento Victor & [Nome]</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-
-        body {
-            font-family: 'Great Vibes', cursive;
-            background: url('https://i.ibb.co/cgN6RTB/tangled-lanterns.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff8f0;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-        header {
-            background: rgba(106, 13, 173, 0.8);
-            padding: 30px 20px;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 42px;
-            color: #f9e79f;
-            text-shadow: 2px 2px #5b0f9a;
-        }
-        header p {
-            margin: 5px 0 0;
-            font-size: 22px;
-            color: #ffe4f7;
-        }
-        main {
-            padding: 20px;
-            max-width: 600px;
-            margin: auto;
-        }
-        h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
-            color: #ffe4f7;
-            text-shadow: 1px 1px #5b0f9a;
-        }
-        #nomeConvidado {
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            font-size: 18px;
-            width: 80%;
-            margin-bottom: 20px;
-        }
-        .gift {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 2px solid #f9e79f;
-            backdrop-filter: blur(5px);
-        }
-        .gift span {
-            font-size: 20px;
-            color: #fff8f0;
-        }
-        .gift button {
-            background: #f9e79f;
-            color: #5b0f9a;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        .gift button:disabled {
-            background: #bfae80;
-            color: white;
-            cursor: not-allowed;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Presentes - Casamento Victor & [Nome]</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f3ff;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #7b3fa0;
+    }
+    input {
+      padding: 8px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 250px;
+    }
+    .gift {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      margin: 10px auto;
+      width: 300px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 6px 10px;
+      background: #7b3fa0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover:enabled {
+      background: #9d5cc0;
+    }
+    button:disabled {
+      background: gray;
+      color: white;
+      cursor: not-allowed;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Lista de Presentes</h1>
-        <p>Victor & [Nome da Noiva]</p>
-    </header>
+  <h1>Lista de Presentes</h1>
+  <input type="text" id="nome" placeholder="Digite seu nome"/>
+  <div id="lista">
+    <div class="gift">
+      <span>Lanterna</span>
+      <button onclick="comprar('lanterna')">Comprar</button>
+    </div>
+    <div class="gift">
+      <span>Pratos</span>
+      <button onclick="comprar('pratos')">Comprar</button>
+    </div>
+    <div class="gift">
+      <span>Panela elétrica</span>
+      <button onclick="comprar('panela')">Comprar</button>
+    </div>
+  </div>
 
-    <main>
-        <h2>🌟 Escolha um presente para nos ajudar a celebrar 🌟</h2>
-        <input type="text" id="nomeConvidado" placeholder="Digite seu nome para reservar um presente">
+  <script>
+    // 🔹 Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyDdxE4EsmszqjM-BcpDIovM8OdPCc15ShU",
+      authDomain: "lista-casamento-victor.firebaseapp.com",
+      databaseURL: "https://lista-casamento-victor-default-rtdb.firebaseio.com",
+      projectId: "lista-casamento-victor",
+      storageBucket: "lista-casamento-victor.firebasestorage.app",
+      messagingSenderId: "985634071927",
+      appId: "1:985634071927:web:ea3a487e8f5302508cad72"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-        <div class="gift" data-id="presente1">
-            <span>Lanterna de papel (tema Enrolados)</span>
-            <button>Marcar como comprado</button>
-        </div>
-        <div class="gift" data-id="presente2">
-            <span>Jogo de pratos</span>
-            <button>Marcar como comprado</button>
-        </div>
-        <div class="gift" data-id="presente3">
-            <span>Panela elétrica</span>
-            <button>Marcar como comprado</button>
-        </div>
-        <div class="gift" data-id="presente4">
-            <span>Jogo de taças</span>
-            <button>Marcar como comprado</button>
-        </div>
-    </main>
+    // Função para comprar um presente
+    function comprar(id) {
+      const nome = document.getElementById('nome').value.trim();
+      if (!nome) {
+        alert("Digite seu nome antes de escolher um presente!");
+        return;
+      }
+      const ref = db.ref('presentes/' + id);
+      ref.once('value', snapshot => {
+        if (!snapshot.exists()) {
+          ref.set({ compradoPor: nome });
+        } else {
+          alert("Esse presente já foi escolhido!");
+        }
+      });
+    }
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
-    <script>
-        // Cole aqui as configurações do Firebase que você copiou
-        const firebaseConfig = {
-            apiKey: "AIzaSyDdxE4EsmszqjM-BcpDIovM8OdPCc15ShU",
-            authDomain: "lista-casamento-victor.firebaseapp.com",
-            databaseURL: "https://lista-casamento-victor-default-rtdb.firebaseio.com",
-            projectId: "lista-casamento-victor",
-            storageBucket: "lista-casamento-victor.firebasestorage.app",
-            messagingSenderId: "985634071927",
-            appId: "1:985634071927:web:ea3a487e8f5302508cad72"
-        };
-
-        // Inicializar Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-
-        const nomeInput = document.getElementById("nomeConvidado");
-
-        // Atualizar lista em tempo real
-        document.querySelectorAll(".gift").forEach(gift => {
-            const id = gift.dataset.id;
-            const botao = gift.querySelector("button");
-
-            // Ouvir alterações no Firebase
-            firebase.database().ref("presentes/" + id).on("value", snapshot => {
-                const valor = snapshot.val();
-                if (valor) {
-                    botao.textContent = `Já comprado por ${valor}`;
-                    botao.disabled = true;
-                } else {
-                    botao.textContent = "Marcar como comprado";
-                    botao.disabled = false;
-                }
-            });
-
-            // Ao clicar no botão
-            botao.addEventListener("click", () => {
-                const nome = nomeInput.value.trim();
-                if (!nome) {
-                    alert("Digite seu nome antes de escolher um presente.");
-                    return;
-                }
-                firebase.database().ref("presentes/" + id).set(nome);
-            });
-        });
-    </script>
+    // 🔹 Atualização em tempo real dos presentes
+    db.ref('presentes').on('value', snapshot => {
+      const presentes = snapshot.val() || {};
+      document.querySelectorAll('.gift').forEach(div => {
+        const item = div.querySelector('span').textContent.toLowerCase().replace(/\s+/g, '');
+        const botao = div.querySelector('button');
+        if (presentes[item]) {
+          botao.textContent = "Já comprado por " + presentes[item].compradoPor;
+          botao.disabled = true;
+        } else {
+          botao.textContent = "Comprar";
+          botao.disabled = false;
+        }
+      });
+    });
+  </script>
 </body>
 </html>
