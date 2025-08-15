@@ -50,19 +50,6 @@
       font-size: 14px;
       margin-bottom: 8px;
     }
-    .lojas {
-    display: flex;
-    justify-content: center;
-    gap: 15px; /* espaçamento entre links */
-    flex-wrap: wrap; /* quebra linha se não couber */
-    margin: 8px 0;
-    }
-
-  .lojas a {
-    text-decoration: none;
-    color: #7b3fa0;
-    font-size: 14px;
-    }
     button {
       padding: 8px 12px;
       background: #7b3fa0;
@@ -89,43 +76,6 @@
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
-  <style>
-  /* Estilo para exibir os links lado a lado */
-  .lojas {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin: 8px 0;
-  }
-  .lojas a {
-    text-decoration: none;
-    color: #7b3fa0;
-    font-size: 14px;
-  }
-</style>
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".gift").forEach(gift => {
-      // Seleciona todos os links diretos dentro do gift (sem pegar o botão)
-      let links = Array.from(gift.querySelectorAll("a"))
-        .filter(a => !a.closest("button"));
-
-      if (links.length > 0) {
-        // Cria container para links
-        let container = document.createElement("div");
-        container.classList.add("lojas");
-
-        // Move os links para dentro do container
-        links.forEach(link => container.appendChild(link));
-
-        // Coloca o container antes do botão
-        let btn = gift.querySelector("button");
-        gift.insertBefore(container, btn);
-      }
-    });
-  });
-</script>
 <body>
   <h1>Lista de Presentes</h1>
   <input type="text" id="nome" placeholder="Digite seu nome"/>
@@ -206,3 +156,4 @@
   </script>
 </body>
 </html>
+
