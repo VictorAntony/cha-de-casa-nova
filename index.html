@@ -11,21 +11,23 @@
       margin: 0;
       padding: 20px;
     }
-
     h1 {
       text-align: center;
       margin-bottom: 30px;
     }
-
-    /* GRADE RESPONSIVA */
+    input {
+      padding: 8px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 250px;
+    }
     #lista {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       justify-items: center;
     }
-
-    /* CARD */
     .gift {
       background: #fff;
       border-radius: 10px;
@@ -35,54 +37,53 @@
       max-width: 250px;
       width: 100%;
     }
-
     .gift img {
       max-width: 100%;
       border-radius: 8px;
     }
-
     .gift span {
       display: block;
       font-weight: bold;
       margin: 15px 0 10px;
     }
-
     .links {
       display: flex;
       justify-content: center;
       gap: 15px;
       margin-bottom: 15px;
     }
-
     .links a {
       text-decoration: none;
       color: purple;
       transition: color 0.3s ease;
     }
-
     .links a:hover {
       color: #b266ff;
     }
-
-    .buy-btn {
-      background: purple;
+    button {
+      padding: 8px 12px;
+      background: #7b3fa0;
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
-
-    .buy-btn:hover {
-      background: #a64dff;
+    button:hover:enabled {
+      background: #9d5cc0;
+    }
+    button:disabled {
+      background: gray;
+      color: white;
+      cursor: not-allowed;
     }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 </head>
 <body>
-
   <h1>Lista de Presentes</h1>
-
+  <input type="text" id="nome" placeholder="Digite seu nome"/>
+  
   <div id="lista">
     <div class="gift">
       <img src="https://img.ltwebstatic.com/images3_spmp/2024/11/14/4f/173152522617fe2a62716eef0b13359462fea7f9a2_thumbnail_405x.webp" alt="Travesseiro">
@@ -199,3 +200,4 @@
     </script>
   </body>
   </html>
+
